@@ -1,0 +1,191 @@
+							/* Arrays, strings and structs by Silvia Rodriguez, 1st year Electronic and Electrical Engineering */
+
+
+//=================================================================================================================================================================
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int my_strcmp(char s1[], char s2[])
+/*function that compares two strings and returns 1 when string1 is bigger than string2, returns 2 when string1 is smaller than string2 or returns 3 when both strings are the same */
+{
+	int i=0;	 	//declares variable i which evaluates each letter of the words
+	int r;			// declares variable to return for the switch case in main function
+	while (s1[i] == s2[i] && s1[i] != '\0') 	//while loop to evaluate step by step each letters of the words; if they are not equal to each other we go to the next letter until we reach the end of the word (last letter when i=\0) 
+	{
+		i++;		// adds 1 to i to go to the next value of the string (next character of the word)
+	}
+	
+	if (s1[i] > s2[i])
+		{
+			r = 1;			
+		}
+	else if (s1[i] < s2[i])
+		{
+			r = 2;				
+		}
+	else
+		{
+			r = 3;				
+		}
+	return r;  // returns variable to switch case in main function depending on the comparison of the two strings
+}
+
+
+int main(void)
+/* main function which recalls compare function to compare 2 strings and prints result depending on the inputed strings. It then asks for another word, copies it and prints it again */
+{
+	int a, ext = 0;    // declares variables
+	char b[20], c[20], x[20];	// declares strings b and c for the comparison function and string x for the copy function
+	
+	printf("Enter 2 words\n");
+	scanf("%s %s", b,c);
+	a=my_strcmp(b,c);  // calls compare function and function is evaluated using the 2 strings the user has input
+	switch (a) 
+	{
+		case 1:				
+			printf("%s is bigger than %s\n", b, c);	 	 	
+		    break;
+
+		case 2:
+			printf("%s is smaller than %s\n", b, c);	 	 	
+		    break;
+
+		case 3:
+			printf("%s is the same as %s\n", b, c);
+			break;
+	}
+
+	printf("Now enter just 1 word\n");
+	scanf("%s", x);
+
+	void my_strcpy(char s3[], char s4[]) // declares strings s3 and s4, to copy text scaned in s3 into s4
+	/* function which copies s3 into s4 */
+	{
+		int i=0;
+		while (s3[i]!='\0')	 // loop to make equal each letter of s4 to s3 until it has reached the end of the word (last letter when i=\0)
+		{
+			s4[i]=s3[i]; // makes s4 equal to s3
+			i++;  // adds 1 to i to go to the next value of the string (next character of the word until it has reached the end of the word)
+		}
+	}
+	printf("%s", x);
+}
+
+//=================================================================================================================================================================
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void add_matrices(int m1[2][2], int m2[2][2], int destination_matrix[2][2]) 
+/* function that adds two dimensional matrices */
+{
+	int i,j;               //declares variables to evaluate the two matrices m1 and m2
+	for(i=0;i<2;i++)       // uses i to evaluate all the rows of the matrices
+	    for(j=0;j<2;j++)   // uses j to evaluate all the columns of the matrices
+	    	destination_matrix[i][j]=m1[i][j]+m2[i][j]; 	// assign resulting matrix of the addition into the destination_matrix
+}
+
+int main(void)
+/* Function which asks user to input two 2-dimensional matrices and prints the addition of the two */
+{
+    int m1[2][2], m2[2][2], destination_matrix[2][2], i, j;     //defines all variables
+    // Matrix 1
+    printf("Enter First matrix: \n"); 
+    for(i=0;i<2;i++)
+        for(j=0;j<2;j++)
+            scanf("%d",&m1[i][j]);  
+    // Matrix 2       
+    printf("\nEnter Second matrix: \n");
+    for(i=0;i<2;i++)
+        for(j=0;j<2;j++)
+            scanf("%d",&m2[i][j]);         
+      
+    add_matrices(m1, m2, destination_matrix);      // calls function "add_matrices" to add both input matrices m1 and m2
+    printf ("The addition of your two matrices is:\n");
+      	for(i=0;i<2;i++)
+      		for(j=0;j<2;j++)
+	      	{
+	      		printf("%d\t", destination_matrix[i][j]);	// prints the resulting matrix
+	      	}         
+        return 0;
+}
+
+//===========================================================================================================================================================
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct library
+/* declares struct library to store Student Records (one library per student) */
+{             
+	char Name[30];          // array of 30 names
+	int StudentNumber;      // student number
+	float CourseMarks[30];  // array of CourseMarks
+};
+
+void main()
+{
+	int a=0;                // declares variable for the switch case
+	int i,j;                // declares variables to select array values
+	char Name[30];          // array of 30 names
+	int LibraryNumber=0;
+	int MarkNumber[100]={0};     // assigns 0 to the whole array
+	struct library library[100]; // assigns an array of values for the library; each number up to 100 corresponds to a student
+
+	do                           //do - while loop to recall main menu every time one of the switch cases is finished (unil case 4 is selected)
+	{
+    	printf("Select the desired option:\n1.Introduce new student\n2.Introduce Mark for existing Student record\n3.Print report of all students\n4:Exit\n"); // shows main menu for the user to select options from
+        scanf("%d",&a);              // scans integer between 1 and 4 from menu for which each corresponds to a switch case
+
+        switch(a)                    //switch that intakes the previously inputed value of a and then selects that case
+        {
+            case 1:                 
+             /* controls student name and number in a given library */
+
+                printf("Enter Student's Name and Student's Number\n");
+                scanf ("%s",library[LibraryNumber].Name);             //scans the name and associates it to library number in the array
+                scanf("%d",&library[LibraryNumber].StudentNumber);    // scans the student number and associates it to library number in the array
+                LibraryNumber++;                                      //increments +1 to libraryNumber, hence going to the next value of the library array for a new student
+                break;                                               // breaks the case and returns to main menu
+
+
+            case 2:               
+            /* controls student mark for corresponding value of library of student */
+
+                printf("Enter Student's Name and Student's Mark\n");
+                scanf("%s",Name);
+                for (i=0;i<LibraryNumber;i++)    // for every value of the library string which we completed, if the name is associated to the string value of the library then scan an associated mark
+                {
+                    if ((strcmp(library[i].Name,Name)==0))
+                    {
+                        scanf ("%f",&library[i].CourseMarks[MarkNumber[i]]); //creates an array within an array to assign multiple marks to a same student
+                        MarkNumber[i]++;         // increment Marknumber by 1 so that the next MarkNumber array will be associated to the next student we input
+                    }
+                }
+                break;      // breaks the case and returns to main menu
+
+
+            case 3:         
+            /*Prints out the whole record of the libraries we have created */
+
+                printf ("The Record(s) For The Entered Student(s) is: \n");
+                for (i=0;i<LibraryNumber;i++)                                        // for loop to print all the elements of each individual library
+                {
+                    printf ("Student Name: %s \n",library[i].Name);                   //prints the name of the student for the given library
+                    printf ("Student ID Number: %d \n",library[i].StudentNumber);     //prints his mark for a given library
+                    for(j=0;j<MarkNumber[i];j++)                                       //second for loop to print multiple marks per student if multiple marks have been inputed
+                    {
+                    	printf ("Student Mark %d:",j);
+                        printf ("  %f \n",library[i].CourseMarks[j]);
+                    }
+                }
+                break;
+
+            case 4:
+                default:
+                    break;
+        }                
+    } while(a!=4);    
+}
